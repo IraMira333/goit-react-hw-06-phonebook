@@ -1,7 +1,11 @@
+import { useDispatch } from 'react-redux';
 import css from './ContactList.module.css';
+import { removeContact } from 'redux/contactsSlice';
 import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts, removeContact }) => {
+const ContactList = ({ contacts }) => {
+  const dispatch = useDispatch();
+
   return (
     <ul className={css.listBox}>
       {contacts.map(contact => {
@@ -12,7 +16,7 @@ const ContactList = ({ contacts, removeContact }) => {
 
             <button
               className={css.listBtn}
-              onClick={() => removeContact(contact.id)}
+              onClick={() => dispatch(removeContact(contact.id))}
             >
               Delete
             </button>
@@ -24,7 +28,6 @@ const ContactList = ({ contacts, removeContact }) => {
 };
 
 ContactList.propTypes = {
-  removeContact: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
