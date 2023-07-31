@@ -4,7 +4,7 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
     contactsInfo: [
-      { id: '-QvnxS2I4k_vf34CIkfPa', name: 'Avea Trotter', number: '234532' },
+      { id: '-QvnxS2I4k_vf34CIkfPa', name: 'Avea Trotter', number: 234532 },
     ],
   },
   reducers: {
