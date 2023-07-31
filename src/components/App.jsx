@@ -1,46 +1,14 @@
-import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
+import { useEffect } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import css from './App.module.css';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
 
 export default function App() {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(window.localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  function addContact({ name, number }) {
-    const isExisting = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (isExisting) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-
-    const contactToAdd = {
-      name: name,
-      number: Number(number),
-      id: nanoid(),
-    };
-
-    setContacts(prevState => [...prevState, contactToAdd]);
-  }
-
-  function removeContact(id) {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
-  }
-
-  function onFilterInput(e) {
-    console.log(e.target.value);
-    setFilter(e.target.value);
-  }
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   function getFilterContacts() {
     return contacts.filter(contact =>
@@ -52,16 +20,16 @@ export default function App() {
   return (
     <div className={css.phonebook}>
       <h2>Phonebook</h2>
-      <ContactForm addContact={addContact} />
+      <ContactForm />
 
       <h2>Contacts</h2>
 
       {contacts.length > 0 ? (
-        <Filter onFilterInput={onFilterInput} />
+        <Filter />
       ) : (
         <p className={css.noContact}>You don't have any contact yet</p>
       )}
-      <ContactList contacts={filteredContacts} removeContact={removeContact} />
+      <ContactList contacts={filteredContacts} />
     </div>
   );
 }
