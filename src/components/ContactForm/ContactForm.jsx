@@ -12,8 +12,8 @@ export default function ContactForm() {
   const onSubmit = e => {
     e.preventDefault();
     const name = e.currentTarget.name.value;
-    const number = e.currentTarget.number.value;
-
+    const number = Number(e.currentTarget.number.value);
+    console.log(name, number);
     const existingContact = findingDoubleName.find(
       el => el.name.toLocaleLowerCase() === name.toLocaleLowerCase()
     );
@@ -36,7 +36,7 @@ export default function ContactForm() {
           type="text"
           name="name"
           id={nameId}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Z\s]+$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
