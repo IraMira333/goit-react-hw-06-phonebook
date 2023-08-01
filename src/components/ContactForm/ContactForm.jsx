@@ -25,8 +25,8 @@ export default function ContactForm() {
     e.target.reset();
   };
 
-  let nameId = shortid.generate();
-  let numberId = shortid.generate();
+  const nameId = shortid.generate();
+  const numberId = shortid.generate();
 
   return (
     <div className={css.formbox}>
